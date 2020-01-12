@@ -32,12 +32,14 @@ while True:
     # Actions to do based on battery status
     if charge <= low and (current == "normal") and ("Discharging" in str(status)):
         notification = Notify.Notification.new("Warning: Battery level is low!")
+        notification.set_urgency(2)
         notification.show()
         time.sleep(6)
         notification.close()
         current = "low"
     elif charge <= critical and (current != "critical") and ("Discharging" in str(status)):
         notification = Notify.Notification.new("Warning: Battery level is critically low!")
+        notification.set_urgency(2)
         notification.show()
         time.sleep(6)
         notification.close()
