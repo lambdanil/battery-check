@@ -24,9 +24,10 @@ while True:
     os.system("rm /tmp/battery")
     # Create int(charge), which is equal to charged %
     if "Charging" in str(status):
-        charge = status[21]+status[22]
+        charge = status[21]+status[22]+status[23]
     if "Discharging" in str(status):
-        charge = status[24]+status[25]
+        charge = status[24]+status[25]+status[26]
+    charge = charge.replace('%','')
     charge = int(charge)
     # Actions to do based on battery status
     if charge <= low and (current == "normal") and ("Discharging" in str(status)):
