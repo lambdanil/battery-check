@@ -1,5 +1,5 @@
 # Import required modules
-import os
+import subprocess
 import time
 from gi.repository import Notify
 
@@ -15,20 +15,16 @@ current = "normal"
 
 # Main loop
 while True:
-    # Write status to file
-    os.system("acpi > /tmp/battery")
-    # Read status from file
-    battery = open("/tmp/battery","r")
-    status = battery.readline()
-    # Remove status file
-    os.system("rm /tmp/battery")
+    # Write status to variable
+    status = str(subprocess.check_output(["acpi"]))
     # Create int(charge), which is equal to charged %
     if "Charging" in str(status):
-        charge = status[21]+status[22]+status[23]
+        charge = status[23]+status[24]+status[25]
     if "Discharging" in str(status):
-        charge = status[24]+status[25]+status[26]
+        charge = status[26]+status[27]+status[28]
     charge = charge.replace('%','')
     charge = int(charge)
+    print(charge)
     # Actions to do based on battery status
     if charge <= low and (current == "normal") and ("Discharging" in str(status)):
         notification = Notify.Notification.new("Warning: Battery level is low!")
